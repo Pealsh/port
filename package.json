@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "sass": "sass --watch scss/style.scss:css/style.css"
+  },
+  "name": "myfkingsite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.83.4"
+  }
+}

@@ -1,0 +1,10 @@
+portfolio/
+├── index.html
+├── css/
+│   └── style.css
+├── scss/
+│   ├── _variables.scss
+│   ├── _mixins.scss
+│   └── style.scss
+└── js/
+    └── main.js 
