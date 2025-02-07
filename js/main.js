@@ -28,9 +28,9 @@ setInterval(() => {
 
 function initRotatingText() {
     const container = document.getElementById('rotating-text');
-    const words = ['Programmer', 'Gamer', 'Designer'];
+    const words = ['taiyo.study0823@gmail.com', '090-9298-5343', 'Ariitaiyou0823', 'gaymer'];
     let currentIndex = 0;
-    
+
     // コンテナをクリア
     container.innerHTML = '';
     
@@ -38,7 +38,7 @@ function initRotatingText() {
     words.forEach((word, index) => {
         const wordElement = document.createElement('div');
         wordElement.className = 'text-rotate-word';
-        
+    
         // 単語を文字に分割して各文字にspanを適用
         const chars = word.split('').map((char, charIndex) => {
             return `<span class="char" style="--delay: ${charIndex * 50}ms">${char}</span>`;
@@ -52,21 +52,21 @@ function initRotatingText() {
     
     function updateActiveWord() {
         // 現在のアクティブな要素を非アクティブに
-        wordElements.forEach(el => {
-            el.classList.remove('active');
-            el.classList.add('exit');
-        });
-        
+        const oldActiveTag = container.querySelector(".active");
+        if (oldActiveTag) {
+            oldActiveTag.classList.remove("active")
+            oldActiveTag.classList.add("exit")
+        }
+
         // 新しい要素をアクティブに
         setTimeout(() => {
-            wordElements[currentIndex].classList.remove('exit');
-            wordElements[currentIndex].classList.add('active');
-            
+            const nextActiveTag = wordElements[currentIndex];
+            nextActiveTag.classList.remove('exit');
+            nextActiveTag.classList.add('active');
+
             // コンテナの幅を更新
-            const activeWord = wordElements[currentIndex];
-            const containerWidth = activeWord.offsetWidth;
-            container.parentElement.parentElement.style.width = `${containerWidth + 80}px`;
-            
+            container.parentElement.parentElement.style.width = `${nextActiveTag.offsetWidth + 80}px`;
+
             // 次のインデックスを設定
             currentIndex = (currentIndex + 1) % words.length;
         }, 300); // 前の単語が消えるのを待つ
@@ -82,9 +82,75 @@ function initRotatingText() {
 // ページ読み込み時に実行
 document.addEventListener('DOMContentLoaded', initRotatingText);
 
-// リサイズ時に再計算
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(initRotatingText, 100);
+
+
+// function initFlickerEffect() {
+//     const flickerLetter = document.querySelector('.g');
+//     console.log(flickerLetter)
+    
+//     function randomFlicker() {
+//         // ランダムな消灯時間（0.1秒から0.5秒）
+//         const offDuration = Math.random() * 400 + 100;
+//         // ランダムな点灯時間（0.5秒から3秒）
+//         const onDuration = Math.random() * 2500 + 500;
+        
+//         // 消灯
+//         flickerLetter.style.opacity = '0';
+//         flickerLetter.style.textShadow = 'none';
+
+//         // 点灯までの待機
+//         setTimeout(() => {
+//             // 点灯
+//             flickerLetter.style.opacity = '1';
+//             flickerLetter.style.textShadow = '0 0 4px #00ff66, 0 0 8px #00ff66';
+            
+//             // 次の消灯までの待機
+//             setTimeout(randomFlicker, onDuration);
+//         }, offDuration);
+//     }
+    
+//     randomFlicker();
+// }
+
+// ページ読み込み時に実行
+document.addEventListener('DOMContentLoaded', () => {
+    initRotatingText();
+    // initFlickerEffect();
+});
+
+// ハンバーガーメニューの制御を追加
+function initMobileNav() {
+    // const hamburger = document.querySelector('.hamburger'); // hamburgerクラスを持つタグがないからエラー出る
+    const navLinks = document.querySelector('.nav-links');
+    const links = document.querySelectorAll('.nav-links li');
+
+    // 各リンクにインデックスを設定
+    links.forEach((link, index) => {
+        link.style.setProperty('--i', index);
+    });
+
+    // hamburger.addEventListener('click', () => {
+    //     // ナビゲーションの表示/非表示を切り替え
+    //     navLinks.classList.toggle('active');
+    //     hamburger.classList.toggle('active');
+
+    //     // メニューが開いているときはスクロールを無効化
+    //     document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    // });
+
+    // リンクをクリックしたらメニューを閉じる
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            // hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+}
+
+// DOMContentLoadedイベントに追加
+document.addEventListener('DOMContentLoaded', () => {
+    initRotatingText();
+    // initFlickerEffect();
+    initMobileNav();
 }); 
